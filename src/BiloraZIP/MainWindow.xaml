@@ -1,0 +1,233 @@
+<Window x:Class="BiloraZIP.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="BiloraZIP — Archive Manager" Icon="pack://application:,,,/BiloraZIP.ico"
+        Width="1230" Height="750" MinWidth="650" MinHeight="500" SizeChanged="Window_SizeChanged"
+        WindowStartupLocation="CenterScreen" FontFamily="Segoe UI"
+        Background="{DynamicResource WindowBg}" Foreground="{DynamicResource TextColor}"
+        AllowDrop="True" DragOver="Window_DragOver" Drop="Window_Drop">
+  <Window.Resources>
+    <Style x:Key="ToolbarButton" TargetType="Button" BasedOn="{StaticResource {x:Type Button}}">
+      <Setter Property="Width" Value="70"/>
+      <Setter Property="Height" Value="61"/>
+      <Setter Property="Margin" Value="2,1,2,1"/>
+      <Setter Property="Padding" Value="4"/>
+      <Setter Property="BorderThickness" Value="0"/>
+      <Setter Property="BorderBrush" Value="Transparent"/>
+      <Setter Property="Background" Value="Transparent"/>
+      <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
+      <Setter Property="Foreground" Value="{DynamicResource TextColor}"/>
+      <Setter Property="Template">
+        <Setter.Value>
+          <ControlTemplate TargetType="Button">
+            <Border x:Name="ToolbarPlate" Background="Transparent" BorderBrush="Transparent" BorderThickness="1" CornerRadius="7" Padding="3">
+              <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+            </Border>
+            <ControlTemplate.Triggers>
+              <Trigger Property="IsMouseOver" Value="True">
+                <Setter TargetName="ToolbarPlate" Property="Background" Value="{DynamicResource ItemHover}"/>
+                <Setter TargetName="ToolbarPlate" Property="BorderBrush" Value="{DynamicResource BorderColor}"/>
+              </Trigger>
+              <Trigger Property="IsPressed" Value="True"><Setter TargetName="ToolbarPlate" Property="Background" Value="{DynamicResource ItemSelected}"/></Trigger>
+              <Trigger Property="IsEnabled" Value="False"><Setter Property="Opacity" Value="0.38"/></Trigger>
+            </ControlTemplate.Triggers>
+          </ControlTemplate>
+        </Setter.Value>
+      </Setter>
+    </Style>
+  </Window.Resources>
+  <DockPanel>
+    <Border DockPanel.Dock="Top" Background="{DynamicResource MenuBg}"
+            BorderBrush="{DynamicResource BorderColor}" BorderThickness="0,0,0,1">
+      <Menu Padding="3,1">
+        <MenuItem Header="_File">
+          <MenuItem Header="Open archive…" InputGestureText="Ctrl+O" Click="Open_Click"/>
+          <MenuItem Header="Open archive folder" Click="OpenArchiveFolder_Click"/>
+          <MenuItem Header="Create archive from files…" Click="Create_Click"/>
+          <MenuItem Header="Create archive from folder…" Click="Folder_Click"/>
+          <MenuItem Header="Close archive" Click="CloseArchive_Click"/>
+          <Separator/>
+          <MenuItem Header="Select all" InputGestureText="Ctrl+A" Click="SelectAll_Click"/>
+          <MenuItem Header="Copy selected file names" Click="CopyNames_Click"/>
+          <MenuItem Header="Find in archive…" InputGestureText="Ctrl+F" Click="Find_Click"/>
+          <MenuItem Header="Archive information…" Click="Info_Click"/>
+          <Separator/>
+          <MenuItem Header="Exit" Click="Exit_Click"/>
+        </MenuItem>
+        <MenuItem Header="_Commands">
+          <MenuItem Header="Create archive from files…" Click="Create_Click"/>
+          <MenuItem Header="Create archive from folder…" Click="Folder_Click"/>
+          <Separator/>
+          <MenuItem Header="Open archive…" Click="Open_Click"/>
+          <Separator/>
+          <MenuItem Header="Extract selected…" Click="ExtractSelected_Click"/>
+          <MenuItem x:Name="MenuExtract" Header="Extract to specified folder…" Click="Extract_Click" IsEnabled="False"/>
+          <MenuItem x:Name="MenuExtractHere" Header="Extract Here" Click="ExtractHere_Click" IsEnabled="False"/>
+          <MenuItem x:Name="MenuExtractFolder" Header="Extract to named folder" Click="ExtractSubfolder_Click" IsEnabled="False"/>
+          <MenuItem x:Name="MenuTest" Header="Test archived files" Click="Test_Click" IsEnabled="False"/>
+          <MenuItem x:Name="MenuView" Header="View selected text file" Click="View_Click" IsEnabled="False"/>
+          <MenuItem x:Name="MenuDelete" Header="Delete selected entry from archive" Click="Delete_Click" IsEnabled="False"/>
+          <Separator/>
+          <MenuItem Header="Find in archive" Click="Find_Click"/>
+          <MenuItem Header="Select all" Click="SelectAll_Click"/>
+        </MenuItem>
+        <MenuItem Header="_Tools">
+          <MenuItem Header="Quick archive wizard…" Click="Create_Click"/>
+          <MenuItem Header="Find in archive" InputGestureText="Ctrl+F" Click="Find_Click"/>
+          <MenuItem Header="Archive information" Click="Info_Click"/>
+          <MenuItem Header="Open archive location" Click="OpenArchiveFolder_Click"/>
+          <MenuItem Header="Copy selected names" Click="CopyNames_Click"/>
+          <Separator/>
+          <MenuItem Header="Scan archive with Microsoft Defender…" Click="Scan_Click"/>
+          <MenuItem Header="Recover readable ZIP entries…" Click="Repair_Click"/>
+          <MenuItem Header="Diagnostic messages…" Click="Diagnostics_Click"/>
+          <Separator/>
+          <MenuItem Header="Mount ISO image (read-only)…" Click="MountIso_Click"/>
+          <MenuItem Header="Unmount ISO image…" Click="UnmountIso_Click"/>
+        </MenuItem>
+        <MenuItem x:Name="FavoritesMenu" Header="F_avorites" SubmenuOpened="FavoritesMenu_SubmenuOpened">
+          <MenuItem Header="Add current archive to favorites" Click="FavoriteAdd_Click"/>
+        </MenuItem>
+        <MenuItem Header="_Options">
+          <MenuItem Header="Dark theme" Click="DarkTheme_Click"/>
+          <MenuItem Header="Light theme" Click="LightTheme_Click"/>
+          <Separator/>
+          <MenuItem Header="Settings…" Click="Settings_Click"/>
+          <Separator/>
+          <MenuItem Header="Windows integration &amp; associations…" Click="Integration_Click"/>
+          <MenuItem Header="Windows default app settings…" Click="DefaultApps_Click"/>
+        </MenuItem>
+        <MenuItem Header="_Language">
+          <MenuItem x:Name="LanguageEnglishMenu" Header="English" IsCheckable="True" Click="LanguageEnglish_Click"/>
+          <MenuItem x:Name="LanguageMongolianMenu" Header="Монгол" IsCheckable="True" Click="LanguageMongolian_Click"/>
+        </MenuItem>
+        <MenuItem Header="_Help">
+          <MenuItem Header="Support BiloraZIP ❤️" Click="Support_Click"/>
+          <Separator/>
+          <MenuItem Header="About Bilora" Click="About_Click"/>
+        </MenuItem>
+      </Menu>
+    </Border>
+
+    <Border DockPanel.Dock="Top" Background="{DynamicResource ToolbarBg}"
+            BorderBrush="{DynamicResource BorderColor}" BorderThickness="0,0,0,1" Padding="5,5">
+      <Grid>
+        <Grid.ColumnDefinitions><ColumnDefinition Width="*"/><ColumnDefinition Width="Auto"/></Grid.ColumnDefinitions>
+        <Grid Grid.Column="0" x:Name="ToolbarPanel" VerticalAlignment="Center">
+          <Grid.ColumnDefinitions><ColumnDefinition Width="*"/><ColumnDefinition Width="Auto"/></Grid.ColumnDefinitions>
+          <StackPanel x:Name="CompactToolbar" Grid.Column="0" Orientation="Horizontal">
+            <Button x:Name="AddButton" Style="{StaticResource ToolbarButton}" Click="Create_Click" ToolTip="Add files to ZIP">
+              <StackPanel><Border Background="{DynamicResource IconTile_add}" CornerRadius="10" Padding="5" Margin="0,0,0,2"><Image Source="{DynamicResource Icon_add}" Width="27" Height="27"/></Border><TextBlock Text="Add" HorizontalAlignment="Center"/></StackPanel>
+            </Button>
+            <Button x:Name="ExtractButton" Style="{StaticResource ToolbarButton}" Click="Extract_Click" IsEnabled="False" ToolTip="Extract archive">
+              <StackPanel><Border Background="{DynamicResource IconTile_extract}" CornerRadius="10" Padding="5" Margin="0,0,0,2"><Image Source="{DynamicResource Icon_extract}" Width="27" Height="27"/></Border><TextBlock Text="Extract" HorizontalAlignment="Center"/></StackPanel>
+            </Button>
+            <Button x:Name="TestButton" Style="{StaticResource ToolbarButton}" Click="Test_Click" IsEnabled="False">
+              <StackPanel><Border Background="{DynamicResource IconTile_test}" CornerRadius="10" Padding="5" Margin="0,0,0,2"><Image Source="{DynamicResource Icon_test}" Width="27" Height="27"/></Border><TextBlock Text="Test" HorizontalAlignment="Center"/></StackPanel>
+            </Button>
+            <Button x:Name="ViewButton" Style="{StaticResource ToolbarButton}" Click="View_Click" IsEnabled="False">
+              <StackPanel><Border Background="{DynamicResource IconTile_view}" CornerRadius="10" Padding="5" Margin="0,0,0,2"><Image Source="{DynamicResource Icon_view}" Width="27" Height="27"/></Border><TextBlock Text="Open" HorizontalAlignment="Center"/></StackPanel>
+            </Button>
+            <Button x:Name="DeleteButton" Style="{StaticResource ToolbarButton}" Click="Delete_Click" IsEnabled="False">
+              <StackPanel><Border Background="{DynamicResource IconTile_delete}" CornerRadius="10" Padding="5" Margin="0,0,0,2"><Image Source="{DynamicResource Icon_delete}" Width="27" Height="27"/></Border><TextBlock Text="Delete" HorizontalAlignment="Center"/></StackPanel>
+            </Button>
+            <Button x:Name="FindButton" Style="{StaticResource ToolbarButton}" Click="Find_Click">
+              <StackPanel><Border Background="{DynamicResource IconTile_find}" CornerRadius="10" Padding="5" Margin="0,0,0,2"><Image Source="{DynamicResource Icon_find}" Width="27" Height="27"/></Border><TextBlock Text="Find" HorizontalAlignment="Center"/></StackPanel>
+            </Button>
+            <Button x:Name="InfoButton" Style="{StaticResource ToolbarButton}" Click="Info_Click">
+              <StackPanel><Border Background="{DynamicResource IconTile_info}" CornerRadius="10" Padding="5" Margin="0,0,0,2"><Image Source="{DynamicResource Icon_info}" Width="27" Height="27"/></Border><TextBlock Text="Info" HorizontalAlignment="Center"/></StackPanel>
+            </Button>
+            <Button x:Name="OpenToolbarButton" Style="{StaticResource ToolbarButton}" Click="Open_Click">
+              <StackPanel><Border Background="{DynamicResource IconTile_open}" CornerRadius="10" Padding="5" Margin="0,0,0,2"><Image Source="{DynamicResource Icon_open}" Width="27" Height="27"/></Border><TextBlock Text="Open" HorizontalAlignment="Center"/></StackPanel>
+            </Button>
+            <Button x:Name="FavoriteToolbarButton" Style="{StaticResource ToolbarButton}" Click="FavoriteAdd_Click">
+              <StackPanel><Border Background="{DynamicResource IconTile_favorites}" CornerRadius="10" Padding="5" Margin="0,0,0,2"><Image Source="{DynamicResource Icon_favorites}" Width="27" Height="27"/></Border><TextBlock Text="Favorite" HorizontalAlignment="Center"/></StackPanel>
+            </Button>
+            <Button x:Name="OptionsToolbarButton" Style="{StaticResource ToolbarButton}" Click="Integration_Click">
+              <StackPanel><Border Background="{DynamicResource IconTile_options}" CornerRadius="10" Padding="5" Margin="0,0,0,2"><Image Source="{DynamicResource Icon_options}" Width="27" Height="27"/></Border><TextBlock Text="Options" HorizontalAlignment="Center"/></StackPanel>
+            </Button>
+          </StackPanel>
+          <Menu Grid.Column="1" Background="Transparent" VerticalAlignment="Center" Margin="4,0,0,0">
+            <MenuItem x:Name="MoreMenu" Header="⋯  More" Visibility="Collapsed"/>
+          </Menu>
+          <!-- Named state controls are no longer part of the visible toolbar. -->
+          <Button x:Name="FolderButton" Visibility="Collapsed" Click="Folder_Click"/>
+          <Button x:Name="ExtractHereButton" Visibility="Collapsed" Click="ExtractHere_Click"/>
+        </Grid>
+        <StackPanel Grid.Column="1" Orientation="Horizontal" VerticalAlignment="Center" Margin="12,0,3,0">
+          <TextBlock x:Name="ThemeLabel" Text="Dark" Foreground="{DynamicResource SecondaryText}" VerticalAlignment="Center" Margin="0,0,7,0"/>
+          <Button x:Name="ThemeToggleButton" Width="45" Height="40" Click="ThemeToggle_Click" ToolTip="Switch between Dark and Light themes">
+            <Image x:Name="ThemeImage" Source="{DynamicResource Icon_light}" Width="27" Height="27"/>
+          </Button>
+        </StackPanel>
+      </Grid>
+    </Border>
+
+    <Border DockPanel.Dock="Top" Background="{DynamicResource PanelBg}" BorderBrush="{DynamicResource BorderColor}" BorderThickness="0,0,0,1" Padding="11,8">
+      <Grid>
+        <Grid.ColumnDefinitions><ColumnDefinition Width="Auto"/><ColumnDefinition Width="Auto"/><ColumnDefinition Width="Auto"/><ColumnDefinition Width="*"/><ColumnDefinition Width="180"/></Grid.ColumnDefinitions>
+        <Button Grid.Column="0" Content="←" FontSize="17" Padding="10,2" Margin="0,0,4,0" Click="Back_Click" ToolTip="Back (Alt+Left)"/>
+        <Button Grid.Column="1" Content="↑" FontSize="17" Padding="10,2" Margin="0,0,4,0" Click="Up_Click" ToolTip="Parent folder (Alt+Up)"/>
+        <Button Grid.Column="2" Content="This PC" FontSize="12" Padding="10,2" Margin="0,0,7,0" Click="Home_Click" ToolTip="This PC"/>
+        <TextBox x:Name="PathBox" Grid.Column="3" VerticalContentAlignment="Center" Height="31" Padding="8,3" Text="" KeyDown="PathBox_KeyDown" ToolTip="Type a folder or archive path, then press Enter"/>
+        <TextBox x:Name="SearchBox" Grid.Column="4" Height="31" Margin="10,0,0,0" VerticalContentAlignment="Center" Padding="8,3" TextChanged="SearchBox_TextChanged" ToolTip="Filter entries by file name"/>
+      </Grid>
+    </Border>
+
+    <Border DockPanel.Dock="Bottom" Background="{DynamicResource MenuBg}" BorderBrush="{DynamicResource BorderColor}" BorderThickness="0,1,0,0" Padding="11,7">
+      <Grid>
+        <Grid.ColumnDefinitions><ColumnDefinition Width="*"/><ColumnDefinition Width="Auto"/><ColumnDefinition Width="Auto"/></Grid.ColumnDefinitions>
+        <TextBlock x:Name="StatusText" Text="Ready" TextTrimming="CharacterEllipsis" Foreground="{DynamicResource SecondaryText}"/>
+        <Button x:Name="ShowProgressButton" Grid.Column="1" Content="Show progress" Click="ShowProgress_Click" Visibility="Collapsed" Padding="10,2" Margin="8,0"/>
+        <TextBlock x:Name="CountText" Grid.Column="2" Text="0 items" Foreground="{DynamicResource SecondaryText}"/>
+      </Grid>
+    </Border>
+
+    <Grid Background="{DynamicResource ListBg}">
+      <Grid.RowDefinitions><RowDefinition Height="Auto"/><RowDefinition Height="*"/></Grid.RowDefinitions>
+      <Grid Grid.Row="0" Margin="12,10">
+        <Grid.ColumnDefinitions><ColumnDefinition Width="*"/><ColumnDefinition Width="Auto"/></Grid.ColumnDefinitions>
+        <StackPanel>
+          <TextBlock x:Name="ArchiveTitle" Text="Welcome to BiloraZIP" FontWeight="SemiBold" FontSize="16"/>
+          <TextBlock x:Name="ArchiveDetail" Text="Browse folders or open an archive to see its contents." Foreground="{DynamicResource SecondaryText}" Margin="0,4,0,0"/>
+          <TextBlock x:Name="WelcomeDonationHint" Text="If you wish, support BiloraZIP with a donation ❤️" Foreground="{DynamicResource Accent}" Margin="0,5,0,0"/>
+        </StackPanel>
+        <TextBlock Grid.Column="1" Text="ZIP / RAR / 7Z / TAR / ZIPX / XAPK" Foreground="{DynamicResource SecondaryText}" VerticalAlignment="Center"/>
+      </Grid>
+      <ListView x:Name="EntriesList" Grid.Row="1" SelectionMode="Extended" AllowDrop="True" Background="{DynamicResource ListBg}" BorderThickness="0"
+                Foreground="{DynamicResource TextColor}" SelectionChanged="EntriesList_SelectionChanged" ContextMenuOpening="EntriesList_ContextMenuOpening"
+                MouseDoubleClick="EntriesList_MouseDoubleClick" ScrollViewer.HorizontalScrollBarVisibility="Disabled"
+                ScrollViewer.VerticalScrollBarVisibility="Auto" ScrollViewer.CanContentScroll="True"
+                PreviewMouseWheel="EntriesList_PreviewMouseWheel"
+                PreviewMouseLeftButtonDown="EntriesList_PreviewMouseLeftButtonDown"
+                PreviewMouseLeftButtonUp="EntriesList_PreviewMouseLeftButtonUp"
+                PreviewMouseMove="EntriesList_PreviewMouseMove"
+                PreviewDragOver="Window_DragOver" PreviewDrop="Window_Drop">
+        <ListView.ContextMenu>
+          <ContextMenu Background="{DynamicResource MenuBg}"/>
+        </ListView.ContextMenu>
+        <ListView.View>
+          <GridView AllowsColumnReorder="True">
+            <GridViewColumn Header="Name" Width="465">
+              <GridViewColumn.CellTemplate>
+                <DataTemplate><StackPanel Orientation="Horizontal">
+                  <Image Width="17" Height="17" Margin="0,0,8,0" Source="{Binding IconSource}"/>
+                  <TextBlock Text="{Binding DisplayName}" VerticalAlignment="Center"/>
+                </StackPanel></DataTemplate>
+              </GridViewColumn.CellTemplate>
+            </GridViewColumn>
+            <GridViewColumn Header="Size" DisplayMemberBinding="{Binding Size}" Width="125"/>
+            <GridViewColumn Header="Packed" DisplayMemberBinding="{Binding CompressedSize}" Width="125"/>
+            <GridViewColumn Header="Type" DisplayMemberBinding="{Binding Type}" Width="110"/>
+            <GridViewColumn Header="Ratio" DisplayMemberBinding="{Binding CompressionRatio}" Width="85"/>
+            <GridViewColumn Header="Modified" DisplayMemberBinding="{Binding Modified}" Width="160"/>
+          </GridView>
+        </ListView.View>
+      </ListView>
+      <Canvas x:Name="MarqueeLayer" Grid.Row="1" IsHitTestVisible="False" ClipToBounds="True">
+        <Border x:Name="MarqueeBorder" Visibility="Collapsed" BorderBrush="#92C9FF"
+                Background="#386AAAF9" BorderThickness="1" SnapsToDevicePixels="True"/>
+      </Canvas>
+    </Grid>
+  </DockPanel>
+</Window>
