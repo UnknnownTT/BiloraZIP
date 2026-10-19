@@ -1,0 +1,72 @@
+<Window x:Class="BiloraZIP.Views.ArchiveOptionsWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Archive name and parameters — BiloraZIP" Width="680" Height="630"
+        MinWidth="650" MinHeight="570" ResizeMode="CanResize" WindowStartupLocation="CenterOwner"
+        Background="{DynamicResource WindowBg}" Foreground="{DynamicResource TextColor}">
+  <Grid Margin="18">
+    <Grid.RowDefinitions><RowDefinition Height="Auto"/><RowDefinition Height="Auto"/><RowDefinition Height="Auto"/><RowDefinition Height="Auto"/><RowDefinition Height="*"/><RowDefinition Height="Auto"/></Grid.RowDefinitions>
+    <TextBlock Grid.Row="0" Text="Create archive" FontSize="20" FontWeight="Bold" Margin="0,0,0,15"/>
+    <TextBlock Grid.Row="1" Text="Archive name and location" Margin="0,0,0,5" Foreground="{DynamicResource SecondaryText}"/>
+    <Grid Grid.Row="2" Margin="0,0,0,15">
+      <Grid.ColumnDefinitions><ColumnDefinition Width="*"/><ColumnDefinition Width="Auto"/></Grid.ColumnDefinitions>
+      <TextBox x:Name="DestinationBox" Height="32" Padding="7,4" VerticalContentAlignment="Center"/>
+      <Button Grid.Column="1" Content="Browse…" Margin="10,0,0,0" Click="Browse_Click" Width="82"/>
+    </Grid>
+    <Grid Grid.Row="3">
+      <Grid.ColumnDefinitions><ColumnDefinition Width="1*"/><ColumnDefinition Width="2*"/></Grid.ColumnDefinitions>
+      <StackPanel Grid.Column="0">
+        <TextBlock Text="Archive format" Foreground="{DynamicResource SecondaryText}" Margin="0,0,0,7"/>
+        <ComboBox x:Name="FormatBox" Width="205" Height="29" HorizontalAlignment="Left" SelectedIndex="0" SelectionChanged="FormatBox_SelectionChanged">
+          <ComboBoxItem Content="ZIP"/>
+          <ComboBoxItem Content="TAR"/>
+          <ComboBoxItem Content="BILZ (experimental)"/>
+          <ComboBoxItem Content="TAR.GZ (gzip-compressed TAR)"/>
+        </ComboBox>
+        <TextBlock Text="RAR/7Z creation unavailable; BILZ has no encryption" Foreground="{DynamicResource SecondaryText}" FontSize="11" TextWrapping="Wrap" Margin="0,5,0,0"/>
+      </StackPanel>
+      <StackPanel Grid.Column="1">
+        <TextBlock Text="Compression level" Foreground="{DynamicResource SecondaryText}" Margin="0,0,0,5"/>
+        <ComboBox x:Name="CompressionBox" Height="30" SelectedIndex="2">
+          <ComboBoxItem Content="Store (no compression)" Tag="NoCompression"/>
+          <ComboBoxItem Content="Fastest" Tag="Fastest"/>
+          <ComboBoxItem Content="Normal / Optimal" Tag="Optimal"/>
+          <ComboBoxItem Content="Smallest size" Tag="SmallestSize"/>
+        </ComboBox>
+        <CheckBox x:Name="VerifyBox" Content="Test archive after creating" IsChecked="True" Margin="0,13,0,0" Foreground="{DynamicResource TextColor}"/>
+      </StackPanel>
+    </Grid>
+    <StackPanel Grid.Row="4" Margin="0,14,0,0" VerticalAlignment="Top">
+      <CheckBox x:Name="EncryptBox" Content="Encrypt ZIP with AES-256 password" Foreground="{DynamicResource TextColor}" Checked="EncryptBox_Changed" Unchecked="EncryptBox_Changed"/>
+      <Grid Margin="0,9,0,0">
+        <Grid.ColumnDefinitions><ColumnDefinition Width="1*"/><ColumnDefinition Width="1*"/></Grid.ColumnDefinitions>
+        <StackPanel Margin="0,0,6,0">
+          <TextBlock Text="Password" Foreground="{DynamicResource SecondaryText}"/>
+          <PasswordBox x:Name="ArchivePasswordBox" IsEnabled="False" Height="31" Margin="0,5,0,0" Padding="7,4"/>
+        </StackPanel>
+        <StackPanel Grid.Column="1" Margin="6,0,0,0">
+          <TextBlock Text="Confirm password" Foreground="{DynamicResource SecondaryText}"/>
+          <PasswordBox x:Name="ConfirmPasswordBox" IsEnabled="False" Height="31" Margin="0,5,0,0" Padding="7,4"/>
+        </StackPanel>
+      </Grid>
+      <TextBlock Text="ZIP encryption protects file contents; file and folder names remain visible." Margin="0,7,0,0" FontSize="11" Foreground="{DynamicResource SecondaryText}" TextWrapping="Wrap"/>
+      <TextBlock Text="Encryption is available for ZIP only. TAR, TAR.GZ and BILZ do not support passwords." Margin="0,8,0,0" FontSize="11" Foreground="{DynamicResource SecondaryText}"/>
+      <StackPanel x:Name="BilzSplitPanel" Margin="0,13,0,0" Visibility="Collapsed">
+        <TextBlock Text="Split BILZ into volumes" FontWeight="SemiBold" Margin="0,0,0,6"/>
+        <ComboBox x:Name="BilzSplitBox" SelectedIndex="0" Width="260" HorizontalAlignment="Left">
+          <ComboBoxItem Content="One file (.bilz)" Tag="0"/>
+          <ComboBoxItem Content="100 MiB per part (.bilz.001…)" Tag="100"/>
+          <ComboBoxItem Content="700 MiB per part (.bilz.001…)" Tag="700"/>
+          <ComboBoxItem Content="1024 MiB per part (.bilz.001…)" Tag="1024"/>
+          <ComboBoxItem Content="4096 MiB per part (.bilz.001…)" Tag="4096"/>
+        </ComboBox>
+        <TextBlock Text="All parts must be in one folder. Open part .001 to read the archive."
+                   Foreground="{DynamicResource SecondaryText}" FontSize="11" Margin="0,5,0,0"/>
+      </StackPanel>
+    </StackPanel>
+    <StackPanel Grid.Row="5" Orientation="Horizontal" HorizontalAlignment="Right">
+      <Button Content="Create" Width="100" Margin="0,0,9,0" IsDefault="True" Click="Create_Click"/>
+      <Button Content="Cancel" Width="92" IsCancel="True"/>
+    </StackPanel>
+  </Grid>
+</Window>

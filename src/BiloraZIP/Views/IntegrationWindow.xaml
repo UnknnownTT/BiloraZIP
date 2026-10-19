@@ -1,0 +1,34 @@
+<Window x:Class="BiloraZIP.Views.IntegrationWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Windows Integration — BiloraZIP" Width="520" Height="525"
+        MinWidth="480" MinHeight="460" WindowStartupLocation="CenterOwner"
+        Background="{DynamicResource WindowBg}" Foreground="{DynamicResource TextColor}">
+  <DockPanel Margin="18">
+    <StackPanel DockPanel.Dock="Bottom" Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,12,0,0">
+      <Button Content="Windows Default Apps" Click="Defaults_Click" Margin="0,0,8,0"/>
+      <Button Content="Apply for this user" Click="Apply_Click" Margin="0,0,8,0"/>
+      <Button Content="Close" Click="Close_Click"/>
+    </StackPanel>
+    <StackPanel>
+      <TextBlock Text="Explorer &amp; file associations" FontSize="21" FontWeight="Bold" Margin="0,0,0,7"/>
+      <TextBlock Text="Choose archive formats BiloraZIP can offer to open. This will not change your Windows default app without your confirmation in Settings."
+                 TextWrapping="Wrap" Foreground="{DynamicResource SecondaryText}" Margin="0,0,0,15"/>
+      <UniformGrid Columns="3" Rows="3" Margin="0,0,0,15">
+        <CheckBox x:Name="ZipBox" Content="ZIP" Margin="0,0,0,10"/>
+        <CheckBox x:Name="RarBox" Content="RAR" Margin="0,0,0,10"/>
+        <CheckBox x:Name="SevenBox" Content="7Z" Margin="0,0,0,10"/>
+        <CheckBox x:Name="TarBox" Content="TAR" Margin="0,0,0,10"/>
+        <CheckBox x:Name="ZipxBox" Content="ZIPX" Margin="0,0,0,10"/>
+        <CheckBox x:Name="XapkBox" Content="XAPK" Margin="0,0,0,10"/>
+        <CheckBox x:Name="BilzBox" Content="BILZ" Margin="0,0,0,10"/>
+      </UniformGrid>
+      <Separator Margin="0,0,0,14"/>
+      <CheckBox x:Name="ExplorerMenuBox" Content="Show BiloraZIP in the classic right-click menu" IsChecked="True" Margin="0,0,0,12"/>
+      <TextBlock Text="Windows 11 normally displays legacy right-click entries under 'Show more options'. All entries are registered only for the current user."
+                 TextWrapping="Wrap" Foreground="{DynamicResource SecondaryText}" Margin="0,0,0,12"/>
+      <TextBlock Text="Machine-wide installer settings may also add entries. To change those, rerun the installer. The Windows default archive app must be chosen by you."
+                 TextWrapping="Wrap" Foreground="{DynamicResource SecondaryText}"/>
+    </StackPanel>
+  </DockPanel>
+</Window>

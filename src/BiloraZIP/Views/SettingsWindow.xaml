@@ -1,0 +1,47 @@
+<Window x:Class="BiloraZIP.Views.SettingsWindow"
+ xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+ xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+ Title="BiloraZIP Settings" Width="620" Height="665" MinWidth="560" MinHeight="590"
+ WindowStartupLocation="CenterOwner" Background="{DynamicResource WindowBg}" Foreground="{DynamicResource TextColor}">
+ <DockPanel Margin="20">
+  <StackPanel DockPanel.Dock="Bottom" Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,12,0,0">
+   <Button Content="Save settings" Width="125" Margin="0,0,9,0" Click="Save_Click" IsDefault="True"/>
+   <Button Content="Cancel" Width="95" IsCancel="True"/>
+  </StackPanel>
+  <ScrollViewer VerticalScrollBarVisibility="Auto">
+   <StackPanel>
+    <TextBlock Text="BiloraZIP Settings" FontSize="22" FontWeight="Bold" Margin="0,0,0,14"/>
+    <TextBlock Text="General" FontSize="16" FontWeight="SemiBold" Margin="0,0,0,8"/>
+    <Grid Margin="0,0,0,12">
+     <Grid.ColumnDefinitions><ColumnDefinition Width="*"/><ColumnDefinition Width="135"/></Grid.ColumnDefinitions>
+     <TextBlock Text="Explorer mouse-wheel scroll lines (1–15)" VerticalAlignment="Center" TextWrapping="Wrap"/>
+     <TextBox Grid.Column="1" x:Name="WheelLinesBox" Height="29" Padding="6,3"/>
+    </Grid>
+    <CheckBox x:Name="VerifyBox" Content="Test archives after creation by default" Margin="0,0,0,10"/>
+    <CheckBox x:Name="HintBox" Content="Show donation invitation on the welcome screen" Margin="0,0,0,10"/>
+    <CheckBox x:Name="DetailsBox" Content="Show detailed error messages" Margin="0,0,0,12"/>
+    <Separator Margin="0,4,0,12"/>
+    <TextBlock Text="Extraction security" FontSize="16" FontWeight="SemiBold" Margin="0,0,0,8"/>
+    <CheckBox x:Name="MixedBox" Content="Warn when ZIP contains both encrypted and unencrypted files" Margin="0,0,0,10"/>
+    <TextBlock Text="Safety limits for untrusted archives (adjust only when needed)." Foreground="{DynamicResource SecondaryText}" TextWrapping="Wrap" Margin="0,0,0,12"/>
+    <Grid>
+     <Grid.ColumnDefinitions><ColumnDefinition Width="*"/><ColumnDefinition Width="135"/></Grid.ColumnDefinitions>
+     <Grid.RowDefinitions><RowDefinition Height="Auto"/><RowDefinition Height="Auto"/><RowDefinition Height="Auto"/><RowDefinition Height="Auto"/></Grid.RowDefinitions>
+     <TextBlock Grid.Row="0" Text="Maximum extracted size (GiB)" Margin="0,7"/>
+     <TextBox Grid.Row="0" Grid.Column="1" x:Name="MaxTotalBox" Height="29" Margin="0,2,0,6" Padding="6,3"/>
+     <TextBlock Grid.Row="1" Text="Maximum size per file (GiB)" Margin="0,7"/>
+     <TextBox Grid.Row="1" Grid.Column="1" x:Name="MaxFileBox" Height="29" Margin="0,2,0,6" Padding="6,3"/>
+     <TextBlock Grid.Row="2" Text="Maximum archive entries" Margin="0,7"/>
+     <TextBox Grid.Row="2" Grid.Column="1" x:Name="MaxEntriesBox" Height="29" Margin="0,2,0,6" Padding="6,3"/>
+     <TextBlock Grid.Row="3" Text="Maximum compression ratio (N:1)" Margin="0,7"/>
+     <TextBox Grid.Row="3" Grid.Column="1" x:Name="MaxRatioBox" Height="29" Margin="0,2,0,6" Padding="6,3"/>
+    </Grid>
+    <Separator Margin="0,13,0,12"/>
+    <TextBlock Text="Support BiloraZIP" FontSize="16" FontWeight="SemiBold" Margin="0,0,0,8"/>
+    <TextBlock Text="Optional HTTPS donation link (set by project owner; no payments processed inside the app)." Foreground="{DynamicResource SecondaryText}" TextWrapping="Wrap" Margin="0,0,0,7"/>
+    <TextBox x:Name="DonationUrlBox" Height="31" Padding="7,4"/>
+    <TextBlock Text="Preferences are stored locally. Archive passwords are never saved." Foreground="{DynamicResource SecondaryText}" TextWrapping="Wrap" FontSize="11" Margin="0,10,0,0"/>
+   </StackPanel>
+  </ScrollViewer>
+ </DockPanel>
+</Window>
