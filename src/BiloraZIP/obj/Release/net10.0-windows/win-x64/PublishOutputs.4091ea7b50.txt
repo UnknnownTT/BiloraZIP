@@ -1,0 +1,7 @@
+C:\Users\munkh\Downloads\BiloraZIP-v1.0-RC1-Explorer-background-operations-hotfix-source\BiloraZIP\publish\BiloraZIP.pdb
+C:\Users\munkh\Downloads\BiloraZIP-v1.0-RC1-Explorer-background-operations-hotfix-source\BiloraZIP\publish\D3DCompiler_47_cor3.dll
+C:\Users\munkh\Downloads\BiloraZIP-v1.0-RC1-Explorer-background-operations-hotfix-source\BiloraZIP\publish\PenImc_cor3.dll
+C:\Users\munkh\Downloads\BiloraZIP-v1.0-RC1-Explorer-background-operations-hotfix-source\BiloraZIP\publish\PresentationNative_cor3.dll
+C:\Users\munkh\Downloads\BiloraZIP-v1.0-RC1-Explorer-background-operations-hotfix-source\BiloraZIP\publish\vcruntime140_cor3.dll
+C:\Users\munkh\Downloads\BiloraZIP-v1.0-RC1-Explorer-background-operations-hotfix-source\BiloraZIP\publish\wpfgfx_cor3.dll
+C:\Users\munkh\Downloads\BiloraZIP-v1.0-RC1-Explorer-background-operations-hotfix-source\BiloraZIP\publish\BiloraZIP.exe

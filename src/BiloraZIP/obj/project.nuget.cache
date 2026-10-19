@@ -1,0 +1,15 @@
+{
+  "version": 2,
+  "dgSpecHash": "2QvcrmmFHVw=",
+  "success": true,
+  "projectFilePath": "C:\\Users\\munkh\\Downloads\\BiloraZIP-v1.0-RC1-Explorer-background-operations-hotfix-source\\BiloraZIP\\src\\BiloraZIP\\BiloraZIP.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\munkh\\.nuget\\packages\\microsoft.net.illink.tasks\\10.0.13\\microsoft.net.illink.tasks.10.0.13.nupkg.sha512",
+    "C:\\Users\\munkh\\.nuget\\packages\\sharpcompress\\0.50.5\\sharpcompress.0.50.5.nupkg.sha512",
+    "C:\\Users\\munkh\\.nuget\\packages\\sharpziplib\\1.4.2\\sharpziplib.1.4.2.nupkg.sha512",
+    "C:\\Users\\munkh\\.nuget\\packages\\microsoft.netcore.app.runtime.win-x64\\10.0.13\\microsoft.netcore.app.runtime.win-x64.10.0.13.nupkg.sha512",
+    "C:\\Users\\munkh\\.nuget\\packages\\microsoft.windowsdesktop.app.runtime.win-x64\\10.0.13\\microsoft.windowsdesktop.app.runtime.win-x64.10.0.13.nupkg.sha512",
+    "C:\\Users\\munkh\\.nuget\\packages\\microsoft.aspnetcore.app.runtime.win-x64\\10.0.13\\microsoft.aspnetcore.app.runtime.win-x64.10.0.13.nupkg.sha512"
+  ],
+  "logs": []
+}
