@@ -1,0 +1,13 @@
+BiloraZIP
+Copyright 2026 BiloraZIP contributors
+
+BiloraZIP application source code is licensed under the Apache License, Version 2.0.
+See LICENSE. This notice does not relicense third-party dependencies or assets.
+
+Third-party packages used by the project:
+- SharpCompress (check license for pinned version 0.50.5)
+- SharpZipLib (check license for pinned version 1.4.2)
+- Microsoft .NET and Windows components are distributed under their respective terms.
+
+Before public release, audit every package and asset and include the required
+third-party notices. Do not claim that this NOTICE completes the audit.
